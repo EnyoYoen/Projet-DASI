@@ -1,6 +1,23 @@
 dao\JpaUtil.class
 metier\modele\Personne.class
+<<<<<<< HEAD
 metier\service\Service.class
 metier\modele\Eleve.class
 util\Message.class
 dao\JpaUtil$1.class
+=======
+metier\modele\Etablissement.class
+metier\service\Service.class
+metier\modele\Coordonnees.class
+metier\modele\Client.class
+dao\IntervenantDao.class
+metier\modele\Eleve.class
+util\Message.class
+console\Main.class
+dao\JpaUtil$1.class
+metier\modele\Coordonnees_.class
+dao\ClientDao.class
+metier\modele\Etablissement_.class
+metier\modele\Intervenant.class
+metier\modele\Client_.class
+>>>>>>> ad141fdb49b3f06b2e70ec857f3fc568536fc175
