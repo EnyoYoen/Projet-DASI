@@ -1,0 +1,31 @@
+Sat Mar 15 14:54:51 CET 2025 : Apache Derby Network Server - 10.14.2.0 - (1828579) démarré et prêt à accepter les connexions sur le port 1527
+----------------------------------------------------------------
+Sat Mar 15 14:54:51 CET 2025:
+Amorçage de Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579) : instance a816c00e-0195-9a16-0c28-000023b7298a 
+dans le répertoire de base de données H:\3IF\TP_DASI\TD1\TD1\DASI-TD avec le chargeur de classe sun.misc.Launcher$AppClassLoader@1d44bcfa
+Chargé de file:/C:/Temp/3IF-DASI/db-derby-10.14.2.0-lib/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_202-b08
+user.dir=C:\Temp\3IF-DASI\db-derby-10.14.2.0-lib
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=H:\3IF\TP_DASI\TD1\TD1
+Chargeur de classe de la base de données démarré - derby.database.classpath = ''
+----------------------------------------------------------------
+Sat Mar 15 14:54:52 CET 2025:
+Fermeture de l'instance a816c00e-0195-9a16-0c28-000023b7298a sur le répertoire de base de données H:\3IF\TP_DASI\TD1\TD1\DASI-TD avec le chargeur de classe sun.misc.Launcher$AppClassLoader@1d44bcfa 
+Sat Mar 15 14:54:52 CET 2025 Thread[DRDAConnThread_3,5,main] (DATABASE = DASI-TD), (DRDAID = {2}), Arrêt de la base de données 'DASI-TD'.
+----------------------------------------------------------------
+Sat Mar 15 14:58:00 CET 2025:
+Amorçage de Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579) : instance 6ede40af-0195-9a16-0c28-000023b7298a 
+dans le répertoire de base de données H:\3IF\TP_DASI\TD1\TD1\DASI-TD avec le chargeur de classe sun.misc.Launcher$AppClassLoader@1d44bcfa
+Chargé de file:/C:/Temp/3IF-DASI/db-derby-10.14.2.0-lib/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_202-b08
+user.dir=C:\Temp\3IF-DASI\db-derby-10.14.2.0-lib
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=H:\3IF\TP_DASI\TD1\TD1
+Chargeur de classe de la base de données démarré - derby.database.classpath = ''

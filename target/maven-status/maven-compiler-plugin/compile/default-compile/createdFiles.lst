@@ -1,0 +1,10 @@
+dao\JpaUtil.class
+metier\modele\Personne.class
+console\Main.class
+metier\service\Service.class
+dao\JpaUtil$1.class
+dao\ClientDao.class
+metier\modele\Client.class
+metier\modele\Eleve.class
+metier\modele\Client_.class
+util\Message.class
