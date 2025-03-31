@@ -4,6 +4,9 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>metier.modele.Eleve</class>
     <class>metier.modele.Personne</class>
+    <class>metier.modele.Coordonnees</class>
+    <class>metier.modele.Etablissement</class>
+    <class>metier.modele.Intervenant</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/PROJET_DB"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

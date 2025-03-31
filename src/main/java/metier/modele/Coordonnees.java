@@ -6,6 +6,8 @@
 package metier.modele;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -16,6 +18,7 @@ import javax.persistence.Id;
 public class Coordonnees {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Float lat;
     private Float lng;

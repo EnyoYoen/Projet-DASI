@@ -6,6 +6,8 @@
 package metier.modele;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -14,10 +16,12 @@ import javax.persistence.Id;
  */
 @Entity
 public class Intervenant extends Personne {
-    @Id
-    private Long id;
+
     private String numTel;
     private Boolean[] niveaux;
+
+    protected Intervenant() {
+    }
 
     public Intervenant(String numTel, Boolean[] niveaux, String nom, String prenom, String mail, String mdp) {
         super(nom, prenom, mail, mdp);

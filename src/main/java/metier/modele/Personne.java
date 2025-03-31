@@ -6,6 +6,7 @@
 package metier.modele;
 
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -52,7 +53,7 @@ public abstract class Personne {
     private Long id;
     private String nom;
     private String prenom;
+    @Column(nullable = false, unique = true)
     private String mail;
     private String mdp;
 }
-

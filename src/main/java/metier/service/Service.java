@@ -6,11 +6,14 @@
 package metier.service;
 
 import dao.EleveDao;
+import dao.EtablissementDao;
 import util.Message;
 import dao.JpaUtil;
 import java.util.List;
 import metier.modele.Eleve;
+import metier.modele.Etablissement;
 import util.EducNetApi;
+import util.Outils;
 
 /**
  *
@@ -18,38 +21,40 @@ import util.EducNetApi;
  */
 public class Service {
 
-    public List<String> verifierEtablissement(String codeEtablissement) {
-        EducNetApi educNetApi = new EducNetApi();
-        List<String> infos = null;
-
-        try {
-            infos = educNetApi.getInformationEtablissement(codeEtablissement);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return infos;
-    }
-
     public Boolean inscrireEleve(Eleve eleve, String codeEtablissement) {
-        EleveDao eleveDao = new EleveDao();
-
+        Outils outils = new Outils();
         Message unMessage = new Message();
-
-        List<String> infos = verifierEtablissement(codeEtablissement);
+        EleveDao eleveDao = new EleveDao();
+        EtablissementDao etablissementDao = new EtablissementDao();
 
         Boolean result;
 
+        Boolean etablissementInDb;
+
         try {
             JpaUtil.creerContextePersistance();
+
+            List<Etablissement> etablissements = etablissementDao.findByCode(codeEtablissement);
+
+            etablissementInDb = !etablissements.isEmpty();
+
             JpaUtil.ouvrirTransaction();
-            if (infos != null) {
+            if (etablissementInDb) {
                 eleveDao.create(eleve);
                 JpaUtil.validerTransaction();
                 unMessage.envoyerMail("nepasrepondre.auto@service.fr", eleve.getMail(), "Succès Création Client", "Bienvenue, le client a été créé avec succès.");
                 result = true;
             } else {
-                result = false;
+                Etablissement etablissement = outils.obtenirEtablissement(codeEtablissement);;
+                if (etablissement != null) {
+                    eleveDao.create(eleve);
+                    etablissementDao.create(etablissement);
+                    JpaUtil.validerTransaction();
+                    result = true;
+                } else {
+                    JpaUtil.annulerTransaction();
+                    result = false;
+                }
             }
 
         } catch (Exception ex) {
