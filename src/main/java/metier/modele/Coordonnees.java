@@ -14,12 +14,13 @@ import javax.persistence.Id;
  */
 @Entity
 public class Coordonnees {
+
     @Id
     private Long id;
     private Float lat;
     private Float lng;
 
-    public Coordonnees() {
+    protected Coordonnees() {
     }
 
     public Coordonnees(Float lat, Float lng) {
@@ -34,6 +35,5 @@ public class Coordonnees {
     public Float getLng() {
         return lng;
     }
-    
-    
+
 }

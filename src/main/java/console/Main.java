@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import metier.modele.Eleve;
 import metier.service.Service;
+import util.EducNetApi;
 
 public class Main {
 
@@ -14,13 +15,15 @@ public class Main {
         testerInscrireEleve();
         JpaUtil.fermerFabriquePersistance();
     }
-    
+
     public static void testerInscrireEleve() {
         Service service = new Service();
         Eleve eleveTest = new Eleve(new Date(), 6, "Lafon", "Tim2", "lafontim2@gmail.com", "1234");
-        service.inscrireEleve(eleveTest);
+        String codeEtablissement = "0440256P";
+        service.inscrireEleve(eleveTest, codeEtablissement);
+
     }
-    
+
     public static void printlnConsoleIHM(Object o) {
         String BG_CYAN = "\u001b[46m";
         String RESET = "\u001B[0m";
@@ -29,6 +32,5 @@ public class Main {
         System.out.println(String.format("%-80s", o));
         System.out.print(RESET);
     }
-    
 
 }

@@ -15,11 +15,28 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 public class Etablissement {
-    @Id 
+
+    @Id
     private Long id;
     private String uai;
     private String nom;
     private Float ips;
     @ManyToOne
     private Coordonnees coords;
+
+    public String getUai() {
+        return uai;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public Float getIps() {
+        return ips;
+    }
+
+    public Coordonnees getCoords() {
+        return coords;
+    }
 }
