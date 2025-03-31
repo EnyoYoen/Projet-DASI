@@ -1,9 +1,12 @@
+H:\Projet-DASI\src\main\java\metier\modele\Coordonnees.java
 H:\Projet-DASI\src\main\java\dao\ClientDao.java
 H:\Projet-DASI\src\main\java\metier\modele\Eleve.java
 H:\Projet-DASI\src\main\java\dao\JpaUtil.java
+H:\Projet-DASI\src\main\java\metier\modele\Etablissement.java
 H:\Projet-DASI\src\main\java\metier\modele\Client.java
 H:\Projet-DASI\src\main\java\console\Main.java
 H:\Projet-DASI\src\main\java\metier\modele\Intervenant.java
 H:\Projet-DASI\src\main\java\util\Message.java
+H:\Projet-DASI\src\main\java\dao\IntervenantDao.java
 H:\Projet-DASI\src\main\java\metier\modele\Personne.java
 H:\Projet-DASI\src\main\java\metier\service\Service.java

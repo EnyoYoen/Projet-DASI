@@ -5,13 +5,19 @@
  */
 package metier.modele;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  *
  * @author tlafondela
  */
+@Entity
 public class Intervenant extends Personne {
-    String numTel;
-    Boolean[] niveaux;
+    @Id
+    private Long id;
+    private String numTel;
+    private Boolean[] niveaux;
 
     public Intervenant(String numTel, Boolean[] niveaux, String nom, String prenom, String mail, String mdp) {
         super(nom, prenom, mail, mdp);
