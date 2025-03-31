@@ -9,6 +9,21 @@ package metier.modele;
  *
  * @author tlafondela
  */
-public class Intervenant {
-    
+public class Intervenant extends Personne {
+    String numTel;
+    Boolean[] niveaux;
+
+    public Intervenant(String numTel, Boolean[] niveaux, String nom, String prenom, String mail, String mdp) {
+        super(nom, prenom, mail, mdp);
+        this.numTel = numTel;
+        this.niveaux = niveaux;
+    }
+
+    public String getNumTel() {
+        return numTel;
+    }
+
+    public Boolean[] getNiveaux() {
+        return niveaux;
+    }
 }
