@@ -4,11 +4,11 @@
  * and open the template in the editor.
  */
 package metier.service;
-import dao.ClientDao;
-import metier.modele.Client;
+import dao.EleveDao;
 import util.Message;
 import dao.JpaUtil;
 import java.util.List;
+import metier.modele.Eleve;
 
 /**
  *
@@ -17,20 +17,19 @@ import java.util.List;
 public class Service {
     
     
-  public Boolean inscrireClient (Client client)
+  public Boolean inscrireEleve (Eleve eleve)
    {
-       ClientDao clientDao = new ClientDao();
+       EleveDao eleveDao = new EleveDao();
 
        Message unMessage = new Message();
        
        try{
            JpaUtil.creerContextePersistance();
            JpaUtil.ouvrirTransaction();
-           clientDao.create(client);
+           eleveDao.create(eleve);
            JpaUtil.validerTransaction();
            
-           unMessage.envoyerMail("nepasrepondre.auto@service.fr", client.getMail(),"Succès Création Client", "Bienvenue, le client a été créé avec succès.");
-          
+           unMessage.envoyerMail("nepasrepondre.auto@service.fr", eleve.getMail(),"Succès Création Client", "Bienvenue, le client a été créé avec succès.");
           
            return true;
        }
@@ -40,7 +39,7 @@ public class Service {
             ex.printStackTrace();
             JpaUtil.annulerTransaction();
             
-            unMessage.envoyerMail("nepasrepondre.auto@service.fr", client.getMail(),"Echec Création Client", "Le client n'a pas pu être crée. Veuillez vérifier vos informations et réessayer dans quelques instants. Si le problèmes persiste, n'hésitez pas à contacter l'entreprise.");
+            unMessage.envoyerMail("nepasrepondre.auto@service.fr", eleve.getMail(),"Echec Création Client", "Le client n'a pas pu être crée. Veuillez vérifier vos informations et réessayer dans quelques instants. Si le problèmes persiste, n'hésitez pas à contacter l'entreprise.");
             
             return false;
                    
@@ -51,20 +50,8 @@ public class Service {
            JpaUtil.fermerContextePersistance();
        }
       
-   }  
+   }
   
-  
-  public List<Client> listerClients()
-  {
-     ClientDao clientDao = new ClientDao();
-
-      JpaUtil.creerContextePersistance();
-      List<Client> clients = clientDao.findAll();
-      JpaUtil.fermerContextePersistance();
-      
-      return clients;
-  }
-            
 }
        
    

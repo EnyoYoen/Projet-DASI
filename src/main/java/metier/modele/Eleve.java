@@ -6,17 +6,23 @@
 package metier.modele;
 
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
  * @author tlafondela
  */
+@Entity
 public class Eleve extends Personne {
 
-    public Eleve(Date dateNaissance, String codeEtablissement, String classe, String nom, String prenom, String mail, String mdp) {
+    protected Eleve() {
+    }
+
+    public Eleve(Date dateNaissance, int classe, String nom, String prenom, String mail, String mdp) {
         super(nom, prenom, mail, mdp);
         this.dateNaissance = dateNaissance;
-        this.codeEtablissement = codeEtablissement;
         this.classe = classe;
     }
 
@@ -26,15 +32,11 @@ public class Eleve extends Personne {
         return dateNaissance;
     }
 
-    public String getCodeEtablissement() {
-        return codeEtablissement;
-    }
-
-    public String getClasse() {
+    public int getClasse() {
         return classe;
     }
     
+    @Temporal(TemporalType.DATE)
     private Date dateNaissance;
-    private String codeEtablissement;
-    private String classe;
+    private int classe;
 }

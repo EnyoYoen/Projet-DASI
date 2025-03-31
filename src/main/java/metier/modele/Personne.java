@@ -6,12 +6,23 @@
 package metier.modele;
 
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 /**
  *
  * @author tlafondela
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Personne {
+
+    protected Personne() {
+    }
 
     public Personne(String nom, String prenom, String mail, String mdp) {
         this.nom = nom;
@@ -36,6 +47,9 @@ public abstract class Personne {
         return mdp;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String nom;
     private String prenom;
     private String mail;
