@@ -5,10 +5,12 @@
  */
 package metier.modele;
 
-import java.util.Date;
+import java.security.Timestamp;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -16,47 +18,35 @@ import javax.persistence.TemporalType;
  *
  * @author ypeyrot
  */
+@Entity
 public class Soutien {
 
     protected Soutien() {
     }
 
-    public Soutien(Date dateDemande) {
-        this.dateDemande = dateDemande;
-        this.etat = "Demande";
+    public Soutien(Matiere matiere, Eleve eleve, String details) {
+        //this.dateDemande = new Timestamp(System.currentTimeMillis());
+        this.matiere = matiere;
+        this.eleve = eleve;
+        this.details = details;
     }
 
-    public Date getDateDemande() {
+    public Timestamp getDateDemande() {
         return dateDemande;
     }
 
-    public void setDateDemande(Date dateDemande) {
+    public void setDateDemande(Timestamp dateDemande) {
         this.dateDemande = dateDemande;
     }
 
-    public Date getDateDebut() {
-        return dateDebut;
-    }
-
-    public void setDateDebut(Date dateDebut) {
-        this.dateDebut = dateDebut;
-    }
-
-    public Date getDateFin() {
+    public Timestamp getDateFin() {
         return dateFin;
     }
 
-    public void setDateFin(Date dateFin) {
+    public void setDateFin(Timestamp dateFin) {
         this.dateFin = dateFin;
     }
-
-    public String getEtat() {
-        return etat;
-    }
-
-    public void setEtat(String etat) {
-        this.etat = etat;
-    }
+    
 
     public String getCompteRendu() {
         return compteRendu;
@@ -102,15 +92,16 @@ public class Soutien {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Temporal(TemporalType.DATE)
-    private Date dateDemande;
+    private Timestamp dateDemande;
     @Temporal(TemporalType.DATE)
-    private Date dateDebut;
-    @Temporal(TemporalType.DATE)
-    private Date dateFin;
-    private String etat;
+    private Timestamp dateFin;
     private String compteRendu;
     private String details;
     private double note;
+    @ManyToOne
     private Eleve eleve;
+    @ManyToOne
     private Intervenant intervenant;
+    @ManyToOne
+    private Matiere matiere;
 }

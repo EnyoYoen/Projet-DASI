@@ -14,6 +14,9 @@ import java.util.List;
 import metier.modele.Coordonnees;
 import metier.modele.Eleve;
 import metier.modele.Etablissement;
+import metier.modele.Intervenant;
+import metier.modele.Matiere;
+import metier.modele.Soutien;
 import util.EducNetApi;
 import util.GeoNetApi;
 import static util.GeoNetApi.getLatLng;
@@ -77,8 +80,25 @@ public class Service {
     }
     
     
-    public String creerSoutien() {
+    public String creerSoutien(Eleve eleve, String details, Matiere matiere) {
         
+        Soutien soutien = new Soutien(matiere, eleve, details);
+        Intervenant intervenant = null;
+        
+        List<Intervenant> listeIntervenants = null;
+        
+        //TrouverIntervenant(Matiere, eleve.getClasse)
+        
+        intervenant = listeIntervenants.get(1);
+        
+        try {
+            JpaUtil.creerContextePersistance();
+            
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            JpaUtil.annulerTransaction();
+        }
         
         return "";
     }
