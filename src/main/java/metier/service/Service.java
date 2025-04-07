@@ -101,6 +101,8 @@ public class Service {
 
                 soutienDao.create(soutien);
 
+                result = soutien.getLien();
+
                 JpaUtil.validerTransaction();
 
             } catch (Exception ex) {
@@ -109,12 +111,21 @@ public class Service {
             } finally {
                 JpaUtil.fermerContextePersistance();
             }
-        } else {
-
-            return result;
         }
 
-        return "";
+        return result;
+    }
+
+    public Eleve authentification(String mail, String mdp) {
+        EleveDao eleveDao = new EleveDao();
+
+        List<Eleve> listeEleve = eleveDao.findByMailMdp(mail, mdp);
+
+        if (listeEleve != null) {
+            return listeEleve.get(0);
+        } else {
+            return null;
+        }
     }
 
     private Etablissement obtenirEtablissement(String codeEtablissement) {
@@ -137,15 +148,11 @@ public class Service {
             double lat = latlng.lat;
             double lng = latlng.lng;
             Coordonnees coords = new Coordonnees(lat, lng);
-            etablissement = new Etablissement(codeEtablissement, infos.get(1), Float.parseFloat(infos.get(8)), infos.get(4), coords);
+            etablissement = new Etablissement(codeEtablissement, nom, Float.parseFloat(infos.get(8)), adresse, coords);
 
         }
 
         return etablissement;
-    }
-
-    public void NoterSoutien(Soutien soutien) {
-
     }
 
 }

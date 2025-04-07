@@ -5,7 +5,9 @@
  */
 package dao;
 
+import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import metier.modele.Eleve;
 
 /**
@@ -18,5 +20,18 @@ public class EleveDao {
         EntityManager em = JpaUtil.obtenirContextePersistance();
         em.persist(eleve);
     }
-    
+
+    public List<Eleve> find() {
+        String jpql = "SELECT e FROM Eleve e";
+        TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(jpql, Eleve.class);
+        return query.getResultList();
+    }
+
+    public List<Eleve> findByMailMdp(String mail, String mdp) {
+        String jpql = "SELECT e FROM Eleve e WHERE e.mail = :mail and e.mdp = :mdp";
+        TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(jpql, Eleve.class);
+        query.setParameter("mail", mail);
+        query.setParameter("mdp", mdp);
+        return query.getResultList();
+    }
 }
