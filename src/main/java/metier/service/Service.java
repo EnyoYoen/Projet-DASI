@@ -5,15 +5,18 @@
  */
 package metier.service;
 
+import com.google.maps.model.LatLng;
 import dao.EleveDao;
 import dao.EtablissementDao;
 import util.Message;
 import dao.JpaUtil;
 import java.util.List;
+import metier.modele.Coordonnees;
 import metier.modele.Eleve;
 import metier.modele.Etablissement;
 import util.EducNetApi;
-import util.Outils;
+import util.GeoNetApi;
+import static util.GeoNetApi.getLatLng;
 
 /**
  *
@@ -22,7 +25,6 @@ import util.Outils;
 public class Service {
 
     public Boolean inscrireEleve(Eleve eleve, String codeEtablissement) {
-        Outils outils = new Outils();
         Message unMessage = new Message();
         EleveDao eleveDao = new EleveDao();
         EtablissementDao etablissementDao = new EtablissementDao();
@@ -45,7 +47,7 @@ public class Service {
                 unMessage.envoyerMail("nepasrepondre.auto@service.fr", eleve.getMail(), "Succès Création Client", "Bienvenue, le client a été créé avec succès.");
                 result = true;
             } else {
-                Etablissement etablissement = outils.obtenirEtablissement(codeEtablissement);
+                Etablissement etablissement = obtenirEtablissement(codeEtablissement);
                 if (etablissement != null) {
                     eleve.setEtablissement(etablissement);
                     etablissementDao.create(etablissement);
@@ -72,6 +74,33 @@ public class Service {
 
         return result;
 
+    }
+    
+    private Etablissement obtenirEtablissement(String codeEtablissement) {
+        EducNetApi educNetApi = new EducNetApi();
+        GeoNetApi geoNetApi = new GeoNetApi();
+        List<String> infos = null;
+
+        try {
+            infos = educNetApi.getInformationEtablissement(codeEtablissement);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        Etablissement etablissement = null;
+
+        if (infos != null) {
+            String nom = infos.get(1);
+            String adresse = infos.get(4);
+            LatLng latlng = getLatLng(nom + ", " + adresse);
+            double lat = latlng.lat;
+            double lng = latlng.lng;
+            Coordonnees coords = new Coordonnees(lat, lng);
+            etablissement = new Etablissement(codeEtablissement, infos.get(1), Float.parseFloat(infos.get(8)), infos.get(4), coords);
+            
+        }
+
+        return etablissement;
     }
 
 }
