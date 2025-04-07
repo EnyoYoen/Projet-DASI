@@ -7,6 +7,9 @@ package util;
 
 import java.util.List;
 import metier.modele.Etablissement;
+import com.google.maps.model.LatLng;
+import metier.modele.Coordonnees;
+import static util.GeoNetApi.getLatLng;
 
 /**
  *
@@ -16,6 +19,7 @@ public class Outils {
 
     public Etablissement obtenirEtablissement(String codeEtablissement) {
         EducNetApi educNetApi = new EducNetApi();
+        GeoNetApi geoNetApi = new GeoNetApi();
         List<String> infos = null;
 
         try {
@@ -27,7 +31,14 @@ public class Outils {
         Etablissement etablissement = null;
 
         if (infos != null) {
-            etablissement = new Etablissement(codeEtablissement, infos.get(1), Float.parseFloat(infos.get(8)), infos.get(4));
+            String nom = infos.get(1);
+            String adresse = infos.get(4);
+            LatLng latlng = getLatLng(nom + ", " + adresse);
+            double lat = latlng.lat;
+            double lng = latlng.lng;
+            Coordonnees coords = new Coordonnees(lat, lng);
+            etablissement = new Etablissement(codeEtablissement, infos.get(1), Float.parseFloat(infos.get(8)), infos.get(4), coords);
+            
         }
 
         return etablissement;

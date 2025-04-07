@@ -7,6 +7,7 @@ package metier.modele;
 
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -24,9 +25,16 @@ public class Eleve extends Personne {
         super(nom, prenom, mail, mdp);
         this.dateNaissance = dateNaissance;
         this.classe = classe;
+        this.etablissement = null;
     }
 
-    
+    public void setEtablissement(Etablissement etablissement) {
+        this.etablissement = etablissement;
+    }
+
+    public Etablissement getEtablissement() {
+        return etablissement;
+    }
     
     public Date getDateNaissance() {
         return dateNaissance;
@@ -39,4 +47,6 @@ public class Eleve extends Personne {
     @Temporal(TemporalType.DATE)
     private Date dateNaissance;
     private int classe;
+    @ManyToOne
+    private Etablissement etablissement;
 }

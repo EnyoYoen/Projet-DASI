@@ -18,7 +18,7 @@ public class Main {
 
     public static void testerInscrireEleve() {
         Service service = new Service();
-        Eleve eleveTest = new Eleve(new Date(), 6, "Lafon", "Tim2", "lafontim255@gmail.com", "1234");
+        Eleve eleveTest = new Eleve(new Date(), 6, "Lafon", "Tim2", "lafontim2555@gmail.com", "1234");
         String codeEtablissement = "0440256P";
         service.inscrireEleve(eleveTest, codeEtablissement);
 

@@ -45,10 +45,11 @@ public class Service {
                 unMessage.envoyerMail("nepasrepondre.auto@service.fr", eleve.getMail(), "Succès Création Client", "Bienvenue, le client a été créé avec succès.");
                 result = true;
             } else {
-                Etablissement etablissement = outils.obtenirEtablissement(codeEtablissement);;
+                Etablissement etablissement = outils.obtenirEtablissement(codeEtablissement);
                 if (etablissement != null) {
-                    eleveDao.create(eleve);
+                    eleve.setEtablissement(etablissement);
                     etablissementDao.create(etablissement);
+                    eleveDao.create(eleve);                    
                     JpaUtil.validerTransaction();
                     result = true;
                 } else {

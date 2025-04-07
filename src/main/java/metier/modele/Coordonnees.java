@@ -5,7 +5,7 @@
  */
 package metier.modele;
 
-import javax.persistence.Entity;
+import javax.persistence.Embeddable;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,28 +14,25 @@ import javax.persistence.Id;
  *
  * @author ypeyrot
  */
-@Entity
+@Embeddable
 public class Coordonnees {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private Float lat;
-    private Float lng;
+    
+    private double lat;
+    private double lng;
 
     protected Coordonnees() {
     }
 
-    public Coordonnees(Float lat, Float lng) {
+    public Coordonnees(double lat, double lng) {
         this.lat = lat;
         this.lng = lng;
     }
 
-    public Float getLat() {
+    public double getLat() {
         return lat;
     }
 
-    public Float getLng() {
+    public double getLng() {
         return lng;
     }
 

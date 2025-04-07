@@ -6,6 +6,7 @@
 package metier.modele;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,23 +23,13 @@ public class Etablissement {
     public Etablissement() {
     }
 
-    public Etablissement(String uai, String nom, Float ips, String adresse) {
+    public Etablissement(String uai, String nom, Float ips, String adresse, Coordonnees coords) {
         this.uai = uai;
         this.nom = nom;
         this.ips = ips;
         this.adresse = adresse;
+        this.coords = coords;
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    @Column(nullable = false, unique = true)
-    private String uai;
-    private String nom;
-    private Float ips;
-    private String adresse;
-    @ManyToOne
-    private Coordonnees coords;
 
     public String getUai() {
         return uai;
@@ -55,4 +46,15 @@ public class Etablissement {
     public Coordonnees getCoords() {
         return coords;
     }
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column(nullable = false, unique = true)
+    private String uai;
+    private String nom;
+    private Float ips;
+    private String adresse;
+    @Embedded
+    private Coordonnees coords;
 }
