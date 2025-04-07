@@ -7,6 +7,7 @@
     <class>metier.modele.Coordonnees</class>
     <class>metier.modele.Etablissement</class>
     <class>metier.modele.Intervenant</class>
+    <class>metier.modele.Autre</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/PROJET_DB"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
