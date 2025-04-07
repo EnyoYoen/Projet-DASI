@@ -89,6 +89,14 @@ public class Soutien {
         this.intervenant = intervenant;
     }
 
+    public String getLien() {
+        return "https://servif.insa-lyon.fr/InteractIF/visio.html?eleve="
+                + eleve.getMail()
+                + "&intervenant="
+                + intervenant.getPrenom().toLowerCase().charAt(0)
+                + intervenant.getNom().toLowerCase();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
