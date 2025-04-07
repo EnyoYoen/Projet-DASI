@@ -21,9 +21,9 @@ public class Soutien {
     protected Soutien() {
     }
 
-    public Soutien(Date dateDemande, String etat) {
+    public Soutien(Date dateDemande) {
         this.dateDemande = dateDemande;
-        this.etat = etat;
+        this.etat = "Demande";
     }
 
     public Date getDateDemande() {

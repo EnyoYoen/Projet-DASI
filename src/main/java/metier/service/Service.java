@@ -73,5 +73,12 @@ public class Service {
         return result;
 
     }
+    
+    
+    public Boolean creerSoutien() {
+        
+        
+        return true;
+    }
 
 }
