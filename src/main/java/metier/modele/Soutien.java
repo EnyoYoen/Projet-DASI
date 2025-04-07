@@ -81,8 +81,22 @@ public class Soutien {
     public void setNote(double note) {
         this.note = note;
     }
-    
-    
+
+    public Eleve getEleve() {
+        return eleve;
+    }
+
+    public void setEleve(Eleve eleve) {
+        this.eleve = eleve;
+    }
+
+    public Intervenant getIntervenant() {
+        return intervenant;
+    }
+
+    public void setIntervenant(Intervenant intervenant) {
+        this.intervenant = intervenant;
+    }
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -97,4 +111,6 @@ public class Soutien {
     private String compteRendu;
     private String details;
     private double note;
+    private Eleve eleve;
+    private Intervenant intervenant;
 }
