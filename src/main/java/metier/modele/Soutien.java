@@ -46,7 +46,6 @@ public class Soutien {
     public void setDateFin(Timestamp dateFin) {
         this.dateFin = dateFin;
     }
-    
 
     public String getCompteRendu() {
         return compteRendu;
@@ -87,24 +86,22 @@ public class Soutien {
     public void setIntervenant(Intervenant intervenant) {
         this.intervenant = intervenant;
     }
-    
+
+    public String getLien() {
+        return "https://servif.insa-lyon.fr/InteractIF/visio.html?eleve="
+                + eleve.getMail()
+                + "&intervenant="
+                + intervenant.getPrenom().toLowerCase().charAt(0)
+                + intervenant.getNom().toLowerCase();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-<<<<<<< HEAD
     @Temporal(TemporalType.DATE)
     private Timestamp dateDemande;
     @Temporal(TemporalType.DATE)
     private Timestamp dateFin;
-=======
-    @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp dateDemande;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp dateDebut;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp dateFin;
-    private String etat;
->>>>>>> 14656a14a8a14e0320d77abdd736ec50874c5046
     private String compteRendu;
     private String details;
     private double note;
