@@ -109,5 +109,9 @@ public class Service {
 
         return etablissement;
     }
+    
+    public void NoterSoutien(Soutien soutien) {
+        
+    }
 
 }
