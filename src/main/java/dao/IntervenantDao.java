@@ -5,10 +5,12 @@
  */
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import metier.modele.Intervenant;
+import metier.modele.Matiere;
 
 /**
  *
@@ -23,9 +25,16 @@ public class IntervenantDao {
         em.persist(intervenant);
     }
     
-    public List<Intervenant> findIntervenantsDisponibles() {
+    public List<Intervenant> findIntervenantsDisponibles(Integer classe) {
          String jpql = "SELECT i FROM Intervenant i WHERE enSoutien = false AND nbSoutiens = MIN(SELECT nbSoutiens FROM Intervenant)";
          TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(jpql, Intervenant.class);
-         return query.getResultList();
+         List<Intervenant> listeIntervenants = query.getResultList();
+         List<Intervenant> listeFinale = new ArrayList();
+         for(Intervenant i:listeIntervenants){
+             if(i.getNiveaux()[classe]){
+                 listeFinale.add(i);
+             }
+         }
+         return listeFinale;
     }
 }

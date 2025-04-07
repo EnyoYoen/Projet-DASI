@@ -8,8 +8,10 @@ package metier.service;
 import com.google.maps.model.LatLng;
 import dao.EleveDao;
 import dao.EtablissementDao;
+import dao.IntervenantDao;
 import util.Message;
 import dao.JpaUtil;
+import dao.SoutienDao;
 import java.util.List;
 import metier.modele.Coordonnees;
 import metier.modele.Eleve;
@@ -54,7 +56,7 @@ public class Service {
                 if (etablissement != null) {
                     eleve.setEtablissement(etablissement);
                     etablissementDao.create(etablissement);
-                    eleveDao.create(eleve);                    
+                    eleveDao.create(eleve);
                     JpaUtil.validerTransaction();
                     result = true;
                 } else {
@@ -78,28 +80,40 @@ public class Service {
         return result;
 
     }
-    
-    
+
     public String creerSoutien(Eleve eleve, String details, Matiere matiere) {
-        
-        Soutien soutien = new Soutien(matiere, eleve, details);
-        Intervenant intervenant = null;
-        
-        List<Intervenant> listeIntervenants = null;
-        
-        //TrouverIntervenant(Matiere, eleve.getClasse)
-        
-        intervenant = listeIntervenants.get(1);
-        
-        try {
-            JpaUtil.creerContextePersistance();
-            
+
+        String result = "";
+
+        SoutienDao soutienDao = new SoutienDao();
+        IntervenantDao intervenantDao = new IntervenantDao();
+
+        List<Intervenant> listeIntervenants = intervenantDao.findIntervenantsDisponibles(eleve.getClasse());
+
+        if (listeIntervenants != null) {
+            try {
+                Intervenant intervenant = listeIntervenants.get(0);
+                Soutien soutien = new Soutien(matiere, eleve, details, intervenant);
+                intervenant.setEnSoutien(true);
+
+                JpaUtil.creerContextePersistance();
+                JpaUtil.ouvrirTransaction();
+
+                soutienDao.create(soutien);
+
+                JpaUtil.validerTransaction();
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JpaUtil.annulerTransaction();
+            } finally {
+                JpaUtil.fermerContextePersistance();
+            }
+        } else {
+
+            return result;
         }
-        catch (Exception ex) {
-            ex.printStackTrace();
-            JpaUtil.annulerTransaction();
-        }
-        
+
         return "";
     }
 
@@ -124,14 +138,14 @@ public class Service {
             double lng = latlng.lng;
             Coordonnees coords = new Coordonnees(lat, lng);
             etablissement = new Etablissement(codeEtablissement, infos.get(1), Float.parseFloat(infos.get(8)), infos.get(4), coords);
-            
+
         }
 
         return etablissement;
     }
-    
+
     public void NoterSoutien(Soutien soutien) {
-        
+
     }
 
 }

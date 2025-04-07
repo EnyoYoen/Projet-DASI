@@ -17,7 +17,7 @@ import javax.persistence.InheritanceType;
  * @author tlafondela
  */
 @Entity
-@Inheritance (strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Intervenant extends Personne {
 
     private String numTel;
@@ -55,6 +55,9 @@ public abstract class Intervenant extends Personne {
     public void addNbSoutiens() {
         ++this.nbSoutiens;
     }
-    
-    
+
+    public void setEnSoutien(Boolean enSoutien) {
+        this.enSoutien = enSoutien;
+    }
+
 }

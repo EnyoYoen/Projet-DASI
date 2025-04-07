@@ -6,6 +6,7 @@
 package metier.modele;
 
 import java.security.Timestamp;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,29 +25,29 @@ public class Soutien {
     protected Soutien() {
     }
 
-    public Soutien(Matiere matiere, Eleve eleve, String details) {
-        //this.dateDemande = new Timestamp(System.currentTimeMillis());
+    public Soutien(Matiere matiere, Eleve eleve, String details, Intervenant intervenant) {
+        this.dateDemande = new Date();
         this.matiere = matiere;
         this.eleve = eleve;
         this.details = details;
+        this.intervenant = intervenant;
     }
 
-    public Timestamp getDateDemande() {
+    public Date getDateDemande() {
         return dateDemande;
     }
 
-    public void setDateDemande(Timestamp dateDemande) {
+    public void setDateDemande(Date dateDemande) {
         this.dateDemande = dateDemande;
     }
 
-    public Timestamp getDateFin() {
+    public Date getDateFin() {
         return dateFin;
     }
 
-    public void setDateFin(Timestamp dateFin) {
+    public void setDateFin(Date dateFin) {
         this.dateFin = dateFin;
     }
-    
 
     public String getCompteRendu() {
         return compteRendu;
@@ -87,24 +88,14 @@ public class Soutien {
     public void setIntervenant(Intervenant intervenant) {
         this.intervenant = intervenant;
     }
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-<<<<<<< HEAD
     @Temporal(TemporalType.DATE)
-    private Timestamp dateDemande;
+    private Date dateDemande;
     @Temporal(TemporalType.DATE)
-    private Timestamp dateFin;
-=======
-    @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp dateDemande;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp dateDebut;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp dateFin;
-    private String etat;
->>>>>>> 14656a14a8a14e0320d77abdd736ec50874c5046
+    private Date dateFin;
     private String compteRendu;
     private String details;
     private double note;

@@ -21,7 +21,7 @@ public class Eleve extends Personne {
     protected Eleve() {
     }
 
-    public Eleve(Date dateNaissance, int classe, String nom, String prenom, String mail, String mdp) {
+    public Eleve(Date dateNaissance, Integer classe, String nom, String prenom, String mail, String mdp) {
         super(nom, prenom, mail, mdp);
         this.dateNaissance = dateNaissance;
         this.classe = classe;
@@ -40,13 +40,13 @@ public class Eleve extends Personne {
         return dateNaissance;
     }
 
-    public int getClasse() {
+    public Integer getClasse() {
         return classe;
     }
     
     @Temporal(TemporalType.DATE)
     private Date dateNaissance;
-    private int classe;
+    private Integer classe;
     @ManyToOne
     private Etablissement etablissement;
 }
