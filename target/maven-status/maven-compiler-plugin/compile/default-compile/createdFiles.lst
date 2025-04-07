@@ -1,4 +1,3 @@
-dao\JpaUtil.class
 metier\modele\Personne.class
 metier\modele\Personne_.class
 metier\modele\Etablissement.class
@@ -9,11 +8,17 @@ util\EducNetApi$EducNetApiIOException.class
 util\Outils.class
 metier\modele\Intervenant_.class
 dao\EleveDao.class
+util\EducNetApi.class
+dao\JpaUtil$1.class
+metier\modele\Coordonnees_.class
+dao\JpaUtil.class
+metier\modele\Etablissement.class
+metier\service\Service.class
+util\EducNetApi$EducNetApiIOException.class
 dao\IntervenantDao.class
 metier\modele\Eleve.class
 metier\modele\Eleve_.class
 util\Message.class
-util\EducNetApi.class
 console\Main.class
 dao\JpaUtil$1.class
 metier\modele\Coordonnees_.class

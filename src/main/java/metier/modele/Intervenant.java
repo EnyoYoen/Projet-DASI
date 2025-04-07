@@ -9,13 +9,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 /**
  *
  * @author tlafondela
  */
 @Entity
-public class Intervenant extends Personne {
+@Inheritance (strategy = InheritanceType.JOINED)
+public abstract class Intervenant extends Personne {
 
     private String numTel;
     private Boolean[] niveaux;
