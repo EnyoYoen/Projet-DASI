@@ -22,6 +22,7 @@ public abstract class Intervenant extends Personne {
 
     private String numTel;
     private Boolean[] niveaux;
+    private int nbSoutiens;
 
     protected Intervenant() {
     }
@@ -30,6 +31,7 @@ public abstract class Intervenant extends Personne {
         super(nom, prenom, mail, mdp);
         this.numTel = numTel;
         this.niveaux = niveaux;
+        this.nbSoutiens = 0;
     }
 
     public String getNumTel() {
@@ -39,4 +41,14 @@ public abstract class Intervenant extends Personne {
     public Boolean[] getNiveaux() {
         return niveaux;
     }
+
+    public int getNbSoutiens() {
+        return nbSoutiens;
+    }
+
+    public void addNbSoutiens() {
+        ++this.nbSoutiens;
+    }
+    
+    
 }
