@@ -14,6 +14,7 @@ import java.util.List;
 import metier.modele.Coordonnees;
 import metier.modele.Eleve;
 import metier.modele.Etablissement;
+import metier.modele.Soutien;
 import util.EducNetApi;
 import util.GeoNetApi;
 import static util.GeoNetApi.getLatLng;

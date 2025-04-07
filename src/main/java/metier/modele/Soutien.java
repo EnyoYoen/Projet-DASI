@@ -5,6 +5,8 @@
  */
 package metier.modele;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +23,7 @@ public class Soutien {
     protected Soutien() {
     }
 
-    public Soutien(Date dateDemande) {
+    public Soutien(Timestamp dateDemande) {
         this.dateDemande = dateDemande;
         this.etat = "Demande";
     }
@@ -30,7 +32,7 @@ public class Soutien {
         return dateDemande;
     }
 
-    public void setDateDemande(Date dateDemande) {
+    public void setDateDemande(Timestamp dateDemande) {
         this.dateDemande = dateDemande;
     }
 
@@ -38,7 +40,7 @@ public class Soutien {
         return dateDebut;
     }
 
-    public void setDateDebut(Date dateDebut) {
+    public void setDateDebut(Timestamp dateDebut) {
         this.dateDebut = dateDebut;
     }
 
@@ -46,7 +48,7 @@ public class Soutien {
         return dateFin;
     }
 
-    public void setDateFin(Date dateFin) {
+    public void setDateFin(Timestamp dateFin) {
         this.dateFin = dateFin;
     }
 
@@ -101,12 +103,12 @@ public class Soutien {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Temporal(TemporalType.DATE)
-    private Date dateDemande;
-    @Temporal(TemporalType.DATE)
-    private Date dateDebut;
-    @Temporal(TemporalType.DATE)
-    private Date dateFin;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp dateDemande;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp dateDebut;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp dateFin;
     private String etat;
     private String compteRendu;
     private String details;
