@@ -121,7 +121,7 @@ public class Service {
 
     public Personne authentification(String mail, String mdp) {
         PersonneDao personneDao = new PersonneDao();
-        
+
         List<Personne> listePersonne = personneDao.findByMailMdp(mail, mdp);
 
         if (listePersonne != null) {
@@ -129,6 +129,26 @@ public class Service {
         } else {
             return null;
         }
+    }
+
+    public Boolean recupererMdp(String mail) {
+        Message unMessage = new Message();
+        Boolean result = false;
+        try {
+            JpaUtil.creerContextePersistance();
+            PersonneDao personneDao = new PersonneDao();
+            List<Personne> personnes = personneDao.findByMail(mail);
+            if (!(personnes == null || personnes.isEmpty() || personnes.get(0).getMail() != mail)) {
+                unMessage.envoyerMail("nepasrepondre.auto@service.fr", mail, "Récupération Mot de Passe Instruct'IF", personnes.get(0).getMdp());
+                result = true;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+
+        return result;
     }
 
     public void noterSoutien(Soutien soutien, double note) {
@@ -139,7 +159,7 @@ public class Service {
             JpaUtil.ouvrirTransaction();
 
             soutien.setNote(note);
-            if(soutien.getDateFin() == null) {
+            if (soutien.getDateFin() == null) {
                 soutien.setDateFin(new Date());
             }
 
@@ -164,7 +184,7 @@ public class Service {
             JpaUtil.ouvrirTransaction();
 
             soutien.setCompteRendu(compteRendu);
-            if(soutien.getDateFin() == null) {
+            if (soutien.getDateFin() == null) {
                 soutien.setDateFin(new Date());
             }
 
@@ -180,9 +200,25 @@ public class Service {
         }
     }
 
-    /*public Personne obtenirProfil(String mail) {
+    public Personne obtenirProfil(String mail) {
+        Message unMessage = new Message();
+        Personne result = null;
+        try {
+            JpaUtil.creerContextePersistance();
+            PersonneDao personneDao = new PersonneDao();
+            List<Personne> personnes = personneDao.findByMail(mail);
+            if (!(personnes == null || personnes.isEmpty() || personnes.get(0).getMail() != mail)) {
+                result = personnes.get(0);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
 
-    }*/
+        return result;
+    }
+
     public List<Soutien> recupererHistorique(Personne personne) {
         PersonneDao personneDao = new PersonneDao();
 
@@ -190,8 +226,8 @@ public class Service {
 
         return listeSoutiens;
     }
-    
-    public String accepterSoutien(Soutien soutien) {      
+
+    public String accepterSoutien(Soutien soutien) {
         return soutien.getLien();
     }
 
@@ -220,7 +256,5 @@ public class Service {
 
         return etablissement;
     }
-    
-   
 
 }
