@@ -17,8 +17,8 @@ public class Etudiant extends Intervenant {
     protected Etudiant() {
     }
 
-    public Etudiant(String universite, String specialite, String numTel, Boolean[] niveaux, String nom, String prenom, String mail, String mdp) {
-        super(numTel, niveaux, nom, prenom, mail, mdp);
+    public Etudiant(String universite, String specialite, String numTel, Integer niveauMin, Integer niveauMax, Integer nbSoutiens, Boolean enSoutien, String nom, String prenom, String mail, String mdp) {
+        super(numTel, niveauMin, niveauMax, nbSoutiens, enSoutien, nom, prenom, mail, mdp);
         this.universite = universite;
         this.specialite = specialite;
     }
@@ -30,7 +30,7 @@ public class Etudiant extends Intervenant {
     public String getSpecialite() {
         return specialite;
     }
-    
+
     private String universite;
-    private String specialite; 
+    private String specialite;
 }

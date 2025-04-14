@@ -21,27 +21,25 @@ import javax.persistence.InheritanceType;
 public abstract class Intervenant extends Personne {
 
     private String numTel;
-    private Boolean[] niveaux;
+    private Integer niveauMin;
+    private Integer niveauMax;
     private Integer nbSoutiens;
     private Boolean enSoutien;
 
     protected Intervenant() {
     }
 
-    public Intervenant(String numTel, Boolean[] niveaux, String nom, String prenom, String mail, String mdp) {
+    public Intervenant(String numTel, Integer niveauMin, Integer niveauMax, Integer nbSoutiens, Boolean enSoutien, String nom, String prenom, String mail, String mdp) {
         super(nom, prenom, mail, mdp);
         this.numTel = numTel;
-        this.niveaux = niveaux;
-        this.nbSoutiens = 0;
-        this.enSoutien = false;
+        this.niveauMin = niveauMin;
+        this.niveauMax = niveauMax;
+        this.nbSoutiens = nbSoutiens;
+        this.enSoutien = enSoutien;
     }
 
     public String getNumTel() {
         return numTel;
-    }
-
-    public Boolean[] getNiveaux() {
-        return niveaux;
     }
 
     public Integer getNbSoutiens() {

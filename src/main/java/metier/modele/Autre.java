@@ -17,14 +17,14 @@ public class Autre extends Intervenant {
     protected Autre() {
     }
 
-    public Autre(String activite, String numTel, Boolean[] niveaux, String nom, String prenom, String mail, String mdp) {
-        super(numTel, niveaux, nom, prenom, mail, mdp);
+    public Autre(String activite, String numTel, Integer niveauMin, Integer niveauMax, Integer nbSoutiens, Boolean enSoutien, String nom, String prenom, String mail, String mdp) {
+        super(numTel, niveauMin, niveauMax, nbSoutiens, enSoutien, nom, prenom, mail, mdp);
         this.activite = activite;
     }
 
     public String getActivite() {
         return activite;
     }
-    
+
     private String activite;
 }

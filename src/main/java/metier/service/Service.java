@@ -91,10 +91,13 @@ public class Service {
         SoutienDao soutienDao = new SoutienDao();
         IntervenantDao intervenantDao = new IntervenantDao();
 
-        List<Intervenant> listeIntervenants = intervenantDao.findIntervenantsDisponibles(eleve.getClasse());
+        try {
+            JpaUtil.creerContextePersistance();
 
-        if (listeIntervenants != null) {
-            try {
+            List<Intervenant> listeIntervenants = intervenantDao.findIntervenantsDisponibles(eleve.getClasse());
+
+            if (listeIntervenants != null) {
+
                 Intervenant intervenant = listeIntervenants.get(0);
                 Soutien soutien = new Soutien(matiere, eleve, details, intervenant);
                 intervenant.setEnSoutien(true);
@@ -108,12 +111,13 @@ public class Service {
 
                 JpaUtil.validerTransaction();
 
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                JpaUtil.annulerTransaction();
-            } finally {
-                JpaUtil.fermerContextePersistance();
             }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JpaUtil.annulerTransaction();
+        } finally {
+            JpaUtil.fermerContextePersistance();
         }
 
         return result;
@@ -121,14 +125,26 @@ public class Service {
 
     public Personne authentification(String mail, String mdp) {
         PersonneDao personneDao = new PersonneDao();
-        
-        List<Personne> listePersonne = personneDao.findByMailMdp(mail, mdp);
 
-        if (listePersonne != null) {
-            return listePersonne.get(0);
-        } else {
-            return null;
+        Personne personne = null;
+        List<Personne> listePersonne = null;
+
+        try {
+            JpaUtil.creerContextePersistance();
+
+            listePersonne = personneDao.findByMailMdp(mail, mdp);
+
+            if (listePersonne != null) {
+                personne = listePersonne.get(0);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JpaUtil.annulerTransaction();
+        } finally {
+            JpaUtil.fermerContextePersistance();
         }
+
+        return personne;
     }
 
     public void noterSoutien(Soutien soutien, double note) {
@@ -139,7 +155,7 @@ public class Service {
             JpaUtil.ouvrirTransaction();
 
             soutien.setNote(note);
-            if(soutien.getDateFin() == null) {
+            if (soutien.getDateFin() == null) {
                 soutien.setDateFin(new Date());
             }
 
@@ -164,7 +180,7 @@ public class Service {
             JpaUtil.ouvrirTransaction();
 
             soutien.setCompteRendu(compteRendu);
-            if(soutien.getDateFin() == null) {
+            if (soutien.getDateFin() == null) {
                 soutien.setDateFin(new Date());
             }
 
@@ -186,12 +202,21 @@ public class Service {
     public List<Soutien> recupererHistorique(Personne personne) {
         PersonneDao personneDao = new PersonneDao();
 
-        List<Soutien> listeSoutiens = personneDao.recupererHistorique(personne);
+        List<Soutien> listeSoutiens = null;
+
+        try {
+            listeSoutiens = personneDao.recupererHistorique(personne);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JpaUtil.annulerTransaction();
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
 
         return listeSoutiens;
     }
-    
-    public String accepterSoutien(Soutien soutien) {      
+
+    public String accepterSoutien(Soutien soutien) {
         return soutien.getLien();
     }
 
@@ -220,7 +245,5 @@ public class Service {
 
         return etablissement;
     }
-    
-   
 
 }
