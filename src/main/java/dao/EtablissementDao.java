@@ -21,7 +21,7 @@ public class EtablissementDao {
 
     public List<Etablissement> findByCode(String uai) {
         String jpql = "SELECT e FROM Etablissement e WHERE e.uai = :unUai ORDER BY e.nom DESC";
-        TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(jpql, Etablissement.class);
+        TypedQuery<Etablissement> query = JpaUtil.obtenirContextePersistance().createQuery(jpql, Etablissement.class);
         query.setParameter("unUai", uai);
         return query.getResultList();
     }

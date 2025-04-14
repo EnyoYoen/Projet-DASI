@@ -11,13 +11,16 @@ import dao.EtablissementDao;
 import dao.IntervenantDao;
 import util.Message;
 import dao.JpaUtil;
+import dao.PersonneDao;
 import dao.SoutienDao;
+import java.util.Date;
 import java.util.List;
 import metier.modele.Coordonnees;
 import metier.modele.Eleve;
 import metier.modele.Etablissement;
 import metier.modele.Intervenant;
 import metier.modele.Matiere;
+import metier.modele.Personne;
 import metier.modele.Soutien;
 import util.EducNetApi;
 import util.GeoNetApi;
@@ -83,7 +86,7 @@ public class Service {
 
     public String creerSoutien(Eleve eleve, String details, Matiere matiere) {
 
-        String result = "";
+        String result = null;
 
         SoutienDao soutienDao = new SoutienDao();
         IntervenantDao intervenantDao = new IntervenantDao();
@@ -116,21 +119,82 @@ public class Service {
         return result;
     }
 
-    public Eleve authentification(String mail, String mdp) {
-        EleveDao eleveDao = new EleveDao();
+    public Personne authentification(String mail, String mdp) {
+        List<Personne> listePersonne = PersonneDao.findByMailMdp(mail, mdp);
 
-        List<Eleve> listeEleve = eleveDao.findByMailMdp(mail, mdp);
-
-        if (listeEleve != null) {
-            return listeEleve.get(0);
+        if (listePersonne != null) {
+            return listePersonne.get(0);
         } else {
             return null;
         }
     }
 
+    public void noterSoutien(Soutien soutien, double note) {
+        SoutienDao soutienDao = new SoutienDao();
+
+        try {
+            JpaUtil.creerContextePersistance();
+            JpaUtil.ouvrirTransaction();
+
+            soutien.setNote(note);
+            if(soutien.getDateFin() == null) {
+                soutien.setDateFin(new Date());
+            }
+
+            soutienDao.update(soutien);
+
+            JpaUtil.validerTransaction();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JpaUtil.annulerTransaction();
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+
+    }
+
+    public void ajouterCompteRendu(Soutien soutien, String compteRendu) {
+        SoutienDao soutienDao = new SoutienDao();
+
+        try {
+            JpaUtil.creerContextePersistance();
+            JpaUtil.ouvrirTransaction();
+
+            soutien.setCompteRendu(compteRendu);
+            if(soutien.getDateFin() == null) {
+                soutien.setDateFin(new Date());
+            }
+
+            soutienDao.update(soutien);
+
+            JpaUtil.validerTransaction();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JpaUtil.annulerTransaction();
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+    }
+
+    /*public Personne obtenirProfil(String mail) {
+
+    }*/
+    public List<Soutien> recupererHistorique(Personne personne) {
+        PersonneDao personneDao = new PersonneDao();
+
+        List<Soutien> listeSoutiens = personneDao.recupererHistorique(personne);
+
+        return listeSoutiens;
+    }
+    
+    public String accepterSoutien(Soutien soutien) {      
+        return soutien.getLien();
+    }
+
     private Etablissement obtenirEtablissement(String codeEtablissement) {
         EducNetApi educNetApi = new EducNetApi();
-        GeoNetApi geoNetApi = new GeoNetApi();
         List<String> infos = null;
 
         try {
@@ -144,7 +208,7 @@ public class Service {
         if (infos != null) {
             String nom = infos.get(1);
             String adresse = infos.get(4);
-            LatLng latlng = getLatLng(nom + ", " + adresse);
+            LatLng latlng = GeoNetApi.getLatLng(nom + ", " + adresse);
             double lat = latlng.lat;
             double lng = latlng.lng;
             Coordonnees coords = new Coordonnees(lat, lng);
@@ -154,5 +218,7 @@ public class Service {
 
         return etablissement;
     }
+    
+   
 
 }

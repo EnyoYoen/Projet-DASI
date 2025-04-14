@@ -37,10 +37,6 @@ public class Soutien {
         return dateDemande;
     }
 
-    public void setDateDemande(Date dateDemande) {
-        this.dateDemande = dateDemande;
-    }
-
     public Date getDateFin() {
         return dateFin;
     }
@@ -76,17 +72,9 @@ public class Soutien {
     public Eleve getEleve() {
         return eleve;
     }
-
-    public void setEleve(Eleve eleve) {
-        this.eleve = eleve;
-    }
-
+    
     public Intervenant getIntervenant() {
         return intervenant;
-    }
-
-    public void setIntervenant(Intervenant intervenant) {
-        this.intervenant = intervenant;
     }
 
     public String getLien() {

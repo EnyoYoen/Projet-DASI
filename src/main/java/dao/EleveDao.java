@@ -27,11 +27,4 @@ public class EleveDao {
         return query.getResultList();
     }
 
-    public List<Eleve> findByMailMdp(String mail, String mdp) {
-        String jpql = "SELECT e FROM Eleve e WHERE e.mail = :mail and e.mdp = :mdp";
-        TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(jpql, Eleve.class);
-        query.setParameter("mail", mail);
-        query.setParameter("mdp", mdp);
-        return query.getResultList();
-    }
 }
