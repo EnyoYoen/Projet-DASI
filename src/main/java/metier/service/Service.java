@@ -258,6 +258,31 @@ public class Service {
         return statsDurees;
     }
 
+    public Map<Integer, Integer> recupererStatsNotes(Intervenant intervenant) {
+        PersonneDao personneDao = new PersonneDao();
+        Map<Integer, Integer> statsNotes = null;
+
+        try {
+            JpaUtil.creerContextePersistance();
+
+            List<Soutien> historique = personneDao.recupererHistorique(intervenant);
+            statsNotes = new HashMap<Integer, Integer>();
+            for (Soutien s : historique) {
+                Integer tranche = (int) (s.getNote());
+                if (!statsNotes.containsKey(tranche)) {
+                    statsNotes.put(tranche, 0);
+                }
+                statsNotes.put(tranche, statsNotes.get(tranche) + 1);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+
+        return statsNotes;
+    }
+
     public void noterSoutien(Soutien soutien, double note) {
         SoutienDao soutienDao = new SoutienDao();
 
