@@ -72,9 +72,13 @@ public class Soutien {
     public Eleve getEleve() {
         return eleve;
     }
-    
+
     public Intervenant getIntervenant() {
         return intervenant;
+    }
+
+    public Matiere getMatiere() {
+        return matiere;
     }
 
     public String getLien() {

@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import metier.modele.Etablissement;
+import metier.modele.Intervenant;
 import metier.modele.Soutien;
 
 /**
@@ -33,5 +35,13 @@ public class SoutienDao {
         TypedQuery<Soutien> query = JpaUtil.obtenirContextePersistance().createQuery(jpql, Soutien.class);
         query.setParameter("date", Timestamp.valueOf(LocalDateTime.now()));
         return query.getResultList();
+    }
+
+    public List<Etablissement> findHistoriqueEtablissements(Intervenant intervenant) {
+        String jpql = "SELECT s.etablissement FROM Soutien s WHERE s.intervenant = :intervenant";
+        TypedQuery<Etablissement> query = JpaUtil.obtenirContextePersistance().createQuery(jpql, Etablissement.class);
+        query.setParameter("intervenant", intervenant);
+        List<Etablissement> listeEtablissements = query.getResultList();
+        return listeEtablissements;
     }
 }

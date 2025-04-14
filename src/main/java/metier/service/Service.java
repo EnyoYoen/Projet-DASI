@@ -14,7 +14,9 @@ import dao.JpaUtil;
 import dao.PersonneDao;
 import dao.SoutienDao;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import metier.modele.Coordonnees;
 import metier.modele.Eleve;
 import metier.modele.Etablissement;
@@ -167,6 +169,90 @@ public class Service {
         return result;
     }
 
+    public Map<Matiere, Integer> recupererStatsMatiere(Intervenant intervenant) {
+        PersonneDao personneDao = new PersonneDao();
+        Map<Matiere, Integer> statsMatieres = null;
+
+        try {
+            JpaUtil.creerContextePersistance();
+
+            List<Soutien> historique = personneDao.recupererHistorique(intervenant);
+            statsMatieres = new HashMap<Matiere, Integer>();
+            for (Soutien s : historique) {
+                Matiere mat = s.getMatiere();
+                if (!statsMatieres.containsKey(mat)) {
+                    statsMatieres.put(mat, 0);
+                }
+                statsMatieres.put(mat, statsMatieres.get(mat) + 1);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+
+        return statsMatieres;
+    }
+
+    // Renvoie les IPS dans une map par tranches de 10 : (IPS appartient à l'intervalle [45, 185])
+    // map[5] => nombre d'IPS compris dans l'intervalle [45 + 5 * 10, 45 + 6 * 10[
+    public Map<Integer, Integer> recupererStatsIPS(Intervenant intervenant) {
+        SoutienDao soutienDao = new SoutienDao();
+        Map<Integer, Integer> statsIPS = null;
+
+        try {
+            JpaUtil.creerContextePersistance();
+
+            List<Etablissement> historique = soutienDao.findHistoriqueEtablissements(intervenant);
+            statsIPS = new HashMap<Integer, Integer>();
+            for (Etablissement e : historique) {
+                Integer indice = (int) ((e.getIps() - 45) / 10);
+                if (e.getIps() == 185) {
+                    indice = 14;
+                }
+                if (!statsIPS.containsKey(indice)) {
+                    statsIPS.put(indice, 0);
+                }
+                statsIPS.put(indice, statsIPS.get(indice) + 1);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+
+        return statsIPS;
+    }
+
+    public Map<Long, Integer> recupererStatsDurees(Intervenant intervenant) {
+        PersonneDao personneDao = new PersonneDao();
+        Map<Long, Integer> statsDurees = null;
+
+        try {
+            JpaUtil.creerContextePersistance();
+
+            List<Soutien> historique = personneDao.recupererHistorique(intervenant);
+            statsDurees = new HashMap<Long, Integer>();
+            for (Soutien s : historique) {
+                if (s.getDateFin() == null) {
+                    continue;
+                }
+                Long duree = s.getDateFin().getTime() - s.getDateDemande().getTime();
+                Long tranche = duree / (1000 * 60 * 10); // Tranches de 10 minutes
+                if (!statsDurees.containsKey(tranche)) {
+                    statsDurees.put(tranche, 0);
+                }
+                statsDurees.put(tranche, statsDurees.get(tranche) + 1);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+
+        return statsDurees;
+    }
+
     public void noterSoutien(Soutien soutien, double note) {
         SoutienDao soutienDao = new SoutienDao();
 
@@ -250,6 +336,23 @@ public class Service {
         }
 
         return listeSoutiens;
+    }
+
+    public List<Etablissement> obtenirHistoriqueEtablissements(Intervenant intervenant) {
+        SoutienDao soutienDao = new SoutienDao();
+
+        List<Etablissement> listeEtablissements = null;
+
+        try {
+            listeEtablissements = soutienDao.findHistoriqueEtablissements(intervenant);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JpaUtil.annulerTransaction();
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+
+        return listeEtablissements;
     }
 
     public String accepterSoutien(Soutien soutien) {
