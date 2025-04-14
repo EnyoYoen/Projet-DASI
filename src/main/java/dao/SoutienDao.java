@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import metier.modele.Eleve;
 import metier.modele.Etablissement;
 import metier.modele.Intervenant;
 import metier.modele.Soutien;
@@ -28,6 +29,15 @@ public class SoutienDao {
     public void update(Soutien soutien) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
         em.merge(soutien);
+    }
+
+    public List<Soutien> recupererHistoriqueIntervenantEleve(Intervenant intervenant, Eleve eleve) {
+        String jpql = "SELECT s FROM Soutien s WHERE s.eleve = :eleve AND s.intervenant = :intervenant";
+        TypedQuery<Soutien> query = JpaUtil.obtenirContextePersistance().createQuery(jpql, Soutien.class);
+        query.setParameter("eleve", eleve);
+        query.setParameter("intervenant", intervenant);
+        List<Soutien> listeSoutiens = query.getResultList();
+        return listeSoutiens;
     }
 
     public List<Soutien> findSoutiensNonNotes() {

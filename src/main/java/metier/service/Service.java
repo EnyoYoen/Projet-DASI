@@ -369,6 +369,24 @@ public class Service {
         return listeSoutiens;
     }
 
+    public List<Soutien> recupererHistoriqueIntervenantEleve(Intervenant intervenant, Eleve eleve) {
+        SoutienDao soutienDao = new SoutienDao();
+
+        List<Soutien> listeSoutiens = null;
+
+        try {
+            JpaUtil.creerContextePersistance();
+            listeSoutiens = soutienDao.recupererHistoriqueIntervenantEleve(intervenant, eleve);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JpaUtil.annulerTransaction();
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+
+        return listeSoutiens;
+    }
+
     public List<Etablissement> obtenirHistoriqueEtablissements(Intervenant intervenant) {
         SoutienDao soutienDao = new SoutienDao();
 
