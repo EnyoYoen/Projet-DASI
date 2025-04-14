@@ -77,6 +77,10 @@ public class Soutien {
         return intervenant;
     }
 
+    public Matiere getMatiere() {
+        return matiere;
+    }
+
     public String getLien() {
         return "https://servif.insa-lyon.fr/InteractIF/visio.html?eleve="
                 + eleve.getMail()
