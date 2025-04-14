@@ -120,7 +120,9 @@ public class Service {
     }
 
     public Personne authentification(String mail, String mdp) {
-        List<Personne> listePersonne = PersonneDao.findByMailMdp(mail, mdp);
+        PersonneDao personneDao = new PersonneDao();
+        
+        List<Personne> listePersonne = personneDao.findByMailMdp(mail, mdp);
 
         if (listePersonne != null) {
             return listePersonne.get(0);
