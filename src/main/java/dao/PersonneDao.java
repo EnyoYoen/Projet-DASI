@@ -20,7 +20,7 @@ import metier.modele.Soutien;
 public class PersonneDao {
 
     public List<Soutien> recupererHistorique(Personne personne) {
-        String jpql = "SELECT s FROM Soutien s WHERE s.eleve = :unePersonne OR s.intervenant = :unePersonne";
+        String jpql = "SELECT s FROM Soutien s WHERE s.eleve = :unePersonne OR s.intervenant = :unePersonne ORDER BY s.dateDemande DESC";
         TypedQuery<Soutien> query = JpaUtil.obtenirContextePersistance().createQuery(jpql, Soutien.class);
         query.setParameter("unePersonne", personne);
         List<Soutien> listeSoutiens = query.getResultList();

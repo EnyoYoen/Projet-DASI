@@ -32,7 +32,7 @@ public class SoutienDao {
     }
 
     public List<Soutien> recupererHistoriqueIntervenantEleve(Intervenant intervenant, Eleve eleve) {
-        String jpql = "SELECT s FROM Soutien s WHERE s.eleve = :eleve AND s.intervenant = :intervenant";
+        String jpql = "SELECT s FROM Soutien s WHERE s.eleve = :eleve AND s.intervenant = :intervenant ORDER BY s.dateDemande DESC";
         TypedQuery<Soutien> query = JpaUtil.obtenirContextePersistance().createQuery(jpql, Soutien.class);
         query.setParameter("eleve", eleve);
         query.setParameter("intervenant", intervenant);
