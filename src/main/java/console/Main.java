@@ -19,6 +19,8 @@ public class Main {
 
         JpaUtil.creerFabriquePersistance();
 
+        System.out.println(service.recupererMatiere());
+
         //service.init();
         //testerInscrireEleve();
         Personne personne = service.authentification("pierrelafon1@gmail.com", "mdp");
