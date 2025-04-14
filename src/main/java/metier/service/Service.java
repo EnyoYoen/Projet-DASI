@@ -283,9 +283,11 @@ public class Service {
         return statsNotes;
     }
 
-    public void noterSoutien(Soutien soutien, double note) {
+    public Boolean noterSoutien(Soutien soutien, double note) {
         SoutienDao soutienDao = new SoutienDao();
         IntervenantDao intervenantDao = new IntervenantDao();
+        
+        Boolean result = true;
 
         try {
             JpaUtil.creerContextePersistance();
@@ -306,15 +308,18 @@ public class Service {
         } catch (Exception ex) {
             ex.printStackTrace();
             JpaUtil.annulerTransaction();
+            result = false;
         } finally {
             JpaUtil.fermerContextePersistance();
         }
-
+        return result;
     }
 
-    public void ajouterCompteRendu(Soutien soutien, String compteRendu) {
+    public Boolean ajouterCompteRendu(Soutien soutien, String compteRendu) {
         SoutienDao soutienDao = new SoutienDao();
         IntervenantDao intervenantDao = new IntervenantDao();
+        
+        Boolean result = true;
 
         try {
             JpaUtil.creerContextePersistance();
@@ -335,9 +340,11 @@ public class Service {
         } catch (Exception ex) {
             ex.printStackTrace();
             JpaUtil.annulerTransaction();
+            result = false;
         } finally {
             JpaUtil.fermerContextePersistance();
         }
+        return result;
     }
 
     public Personne obtenirProfil(String mail) {
@@ -395,7 +402,9 @@ public class Service {
         return listeSoutiens;
     }
 
-    public List<Etablissement> obtenirHistoriqueEtablissements(Intervenant intervenant) {
+    public List<Etablissement> recupererHistoriqueEtablissements(Intervenant intervenant) {
+        JpaUtil.creerContextePersistance();
+            
         SoutienDao soutienDao = new SoutienDao();
 
         List<Etablissement> listeEtablissements = null;
@@ -412,7 +421,7 @@ public class Service {
         return listeEtablissements;
     }
 
-    public List<Matiere> recupererMatiere() {
+    public List<Matiere> recupererMatieres() {
         List<Matiere> liste = Arrays.asList(Matiere.values());
         return liste;
     }

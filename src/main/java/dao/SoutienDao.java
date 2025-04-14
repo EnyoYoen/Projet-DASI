@@ -48,7 +48,7 @@ public class SoutienDao {
     }
 
     public List<Etablissement> findHistoriqueEtablissements(Intervenant intervenant) {
-        String jpql = "SELECT s.etablissement FROM Soutien s WHERE s.intervenant = :intervenant";
+        String jpql = "SELECT s.eleve.etablissement FROM Soutien s WHERE s.intervenant = :intervenant";
         TypedQuery<Etablissement> query = JpaUtil.obtenirContextePersistance().createQuery(jpql, Etablissement.class);
         query.setParameter("intervenant", intervenant);
         List<Etablissement> listeEtablissements = query.getResultList();
