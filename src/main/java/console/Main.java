@@ -4,7 +4,9 @@ import dao.JpaUtil;
 import java.util.Date;
 import java.util.List;
 import metier.modele.Eleve;
+import metier.modele.Intervenant;
 import metier.modele.Matiere;
+import metier.modele.Personne;
 import metier.service.Service;
 import util.EducNetApi;
 
@@ -17,8 +19,14 @@ public class Main {
         JpaUtil.creerFabriquePersistance();
         testerInscrireEleve();
 
-        Eleve eleve = service.authentification("lafontim@gmail.com", "1234");
-        testerCreerSoutien(eleve);
+        Personne personne = service.authentification("lafontim@gmail.com", "1234");
+
+        if (personne instanceof Eleve) {
+            testerCreerSoutien((Eleve) personne);
+        } else if (personne instanceof Intervenant) {
+            System.out.println("Pas un elève");
+        }
+
         JpaUtil.fermerFabriquePersistance();
     }
 

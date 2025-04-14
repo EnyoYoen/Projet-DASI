@@ -23,7 +23,7 @@ public class EleveDao {
 
     public List<Eleve> find() {
         String jpql = "SELECT e FROM Eleve e";
-        TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(jpql, Eleve.class);
+        TypedQuery<Eleve> query = JpaUtil.obtenirContextePersistance().createQuery(jpql, Eleve.class);
         return query.getResultList();
     }
 

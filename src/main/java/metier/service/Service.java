@@ -91,10 +91,13 @@ public class Service {
         SoutienDao soutienDao = new SoutienDao();
         IntervenantDao intervenantDao = new IntervenantDao();
 
-        List<Intervenant> listeIntervenants = intervenantDao.findIntervenantsDisponibles(eleve.getClasse());
+        try {
+            JpaUtil.creerContextePersistance();
 
-        if (listeIntervenants != null) {
-            try {
+            List<Intervenant> listeIntervenants = intervenantDao.findIntervenantsDisponibles(eleve.getClasse());
+
+            if (listeIntervenants != null) {
+
                 Intervenant intervenant = listeIntervenants.get(0);
                 Soutien soutien = new Soutien(matiere, eleve, details, intervenant);
                 intervenant.setEnSoutien(true);
@@ -108,12 +111,13 @@ public class Service {
 
                 JpaUtil.validerTransaction();
 
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                JpaUtil.annulerTransaction();
-            } finally {
-                JpaUtil.fermerContextePersistance();
             }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JpaUtil.annulerTransaction();
+        } finally {
+            JpaUtil.fermerContextePersistance();
         }
 
         return result;
@@ -122,13 +126,25 @@ public class Service {
     public Personne authentification(String mail, String mdp) {
         PersonneDao personneDao = new PersonneDao();
 
-        List<Personne> listePersonne = personneDao.findByMailMdp(mail, mdp);
+        Personne personne = null;
+        List<Personne> listePersonne = null;
 
-        if (listePersonne != null) {
-            return listePersonne.get(0);
-        } else {
-            return null;
+        try {
+            JpaUtil.creerContextePersistance();
+
+            listePersonne = personneDao.findByMailMdp(mail, mdp);
+
+            if (listePersonne != null) {
+                personne = listePersonne.get(0);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JpaUtil.annulerTransaction();
+        } finally {
+            JpaUtil.fermerContextePersistance();
         }
+
+        return personne;
     }
 
     public Boolean recupererMdp(String mail) {
@@ -222,7 +238,16 @@ public class Service {
     public List<Soutien> recupererHistorique(Personne personne) {
         PersonneDao personneDao = new PersonneDao();
 
-        List<Soutien> listeSoutiens = personneDao.recupererHistorique(personne);
+        List<Soutien> listeSoutiens = null;
+
+        try {
+            listeSoutiens = personneDao.recupererHistorique(personne);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JpaUtil.annulerTransaction();
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
 
         return listeSoutiens;
     }

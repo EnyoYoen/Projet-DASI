@@ -17,14 +17,14 @@ public class Enseignant extends Intervenant {
     protected Enseignant() {
     }
 
-    public Enseignant(String typeEtablissement, String numTel, Boolean[] niveaux, String nom, String prenom, String mail, String mdp) {
-        super(numTel, niveaux, nom, prenom, mail, mdp);
+    public Enseignant(String typeEtablissement, String numTel, Integer niveauMin, Integer niveauMax, Integer nbSoutiens, Boolean enSoutien, String nom, String prenom, String mail, String mdp) {
+        super(numTel, niveauMin, niveauMax, nbSoutiens, enSoutien, nom, prenom, mail, mdp);
         this.typeEtablissement = typeEtablissement;
     }
 
     public String getTypeEtablissement() {
         return typeEtablissement;
     }
-    
+
     private String typeEtablissement;
 }

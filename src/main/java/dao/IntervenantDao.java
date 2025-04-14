@@ -17,24 +17,17 @@ import metier.modele.Matiere;
  * @author ypeyrot
  */
 public class IntervenantDao {
-    
-    
-    public void create (Intervenant intervenant)
-    {  
+
+    public void create(Intervenant intervenant) {
         EntityManager em = JpaUtil.obtenirContextePersistance();
         em.persist(intervenant);
     }
-    
+
     public List<Intervenant> findIntervenantsDisponibles(Integer classe) {
-         String jpql = "SELECT i FROM Intervenant i WHERE enSoutien = false AND nbSoutiens = MIN(SELECT nbSoutiens FROM Intervenant)";
-         TypedQuery query = JpaUtil.obtenirContextePersistance().createQuery(jpql, Intervenant.class);
-         List<Intervenant> listeIntervenants = query.getResultList();
-         List<Intervenant> listeFinale = new ArrayList();
-         for(Intervenant i:listeIntervenants){
-             if(i.getNiveaux()[classe]){
-                 listeFinale.add(i);
-             }
-         }
-         return listeFinale;
+        String jpql = "SELECT i FROM Intervenant i WHERE enSoutien = false AND niveauMin <= :classe AND niveauMax >= :classe AND nbSoutiens = MIN(SELECT nbSoutiens FROM Intervenant)";
+        TypedQuery<Intervenant> query = JpaUtil.obtenirContextePersistance().createQuery(jpql, Intervenant.class);
+        query.setParameter("classe", classe);
+        List<Intervenant> listeIntervenants = query.getResultList();
+        return listeIntervenants;
     }
 }
