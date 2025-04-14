@@ -28,10 +28,17 @@ public class PersonneDao {
     }
 
     public List<Personne> findByMailMdp(String mail, String mdp) {
-        String jpql = "SELECT p FROM Personne p WHERE p.mail = :mail and p.mdp = :mdp";
+        String jpql = "SELECT p FROM Personne p WHERE p.mail = :mail AND p.mdp = :mdp";
         TypedQuery<Personne> query = JpaUtil.obtenirContextePersistance().createQuery(jpql, Personne.class);
         query.setParameter("mail", mail);
         query.setParameter("mdp", mdp);
+        return query.getResultList();
+    }
+
+    public List<Personne> findByMail(String mail) {
+        String jpql = "SELECT p FROM Personne p WHERE p.mail = :mail";
+        TypedQuery<Personne> query = JpaUtil.obtenirContextePersistance().createQuery(jpql, Personne.class);
+        query.setParameter("mail", mail);
         return query.getResultList();
     }
 

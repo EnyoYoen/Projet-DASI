@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 metier\modele\Autre_.class
 metier\modele\Personne.class
 metier\modele\Personne_.class
@@ -33,3 +35,4 @@ dao\EtablissementDao.class
 metier\modele\Etablissement_.class
 metier\modele\Intervenant.class
 dao\AutreDao.class
+>>>>>>> 967263e9439340f4f2b6df6379e31bb553e16454
