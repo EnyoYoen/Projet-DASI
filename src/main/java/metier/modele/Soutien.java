@@ -72,7 +72,7 @@ public class Soutien {
     public Eleve getEleve() {
         return eleve;
     }
-    
+
     public Intervenant getIntervenant() {
         return intervenant;
     }
@@ -99,6 +99,5 @@ public class Soutien {
     private Eleve eleve;
     @ManyToOne
     private Intervenant intervenant;
-    @ManyToOne
     private Matiere matiere;
 }

@@ -3,6 +3,7 @@ package console;
 import dao.JpaUtil;
 import java.util.Date;
 import java.util.List;
+import metier.modele.Autre;
 import metier.modele.Eleve;
 import metier.modele.Intervenant;
 import metier.modele.Matiere;
@@ -17,13 +18,15 @@ public class Main {
         Service service = new Service();
 
         JpaUtil.creerFabriquePersistance();
-        testerInscrireEleve();
 
-        Personne personne = service.authentification("lafontim@gmail.com", "1234");
-
+        //service.init();
+        //testerInscrireEleve();
+        Personne personne = service.authentification("pierrelafon1@gmail.com", "mdp");
+        System.out.println(personne);
         if (personne instanceof Eleve) {
             testerCreerSoutien((Eleve) personne);
-        } else if (personne instanceof Intervenant) {
+            System.out.println("Test créer soutien");
+        } else if (personne instanceof Autre) {
             System.out.println("Pas un elève");
         }
 
@@ -32,7 +35,7 @@ public class Main {
 
     public static void testerInscrireEleve() {
         Service service = new Service();
-        Eleve eleveTest = new Eleve(new Date(), 6, "Lafon", "Tim", "lafontim@gmail.com", "1234");
+        Eleve eleveTest = new Eleve(new Date(), 6, "Lafon", "Tim", "lafontim2@gmail.com", "1234");
         String codeEtablissement = "0691664J";
         service.inscrireEleve(eleveTest, codeEtablissement);
 
@@ -44,6 +47,7 @@ public class Main {
 
     }
 
+    //public static void
     public static void printlnConsoleIHM(Object o) {
         String BG_CYAN = "\u001b[46m";
         String RESET = "\u001B[0m";

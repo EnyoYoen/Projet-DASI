@@ -29,13 +29,13 @@ public abstract class Intervenant extends Personne {
     protected Intervenant() {
     }
 
-    public Intervenant(String numTel, Integer niveauMin, Integer niveauMax, Integer nbSoutiens, Boolean enSoutien, String nom, String prenom, String mail, String mdp) {
+    public Intervenant(String numTel, Integer niveauMin, Integer niveauMax, String nom, String prenom, String mail, String mdp) {
         super(nom, prenom, mail, mdp);
         this.numTel = numTel;
         this.niveauMin = niveauMin;
         this.niveauMax = niveauMax;
-        this.nbSoutiens = nbSoutiens;
-        this.enSoutien = enSoutien;
+        this.nbSoutiens = 0;
+        this.enSoutien = false;
     }
 
     public String getNumTel() {

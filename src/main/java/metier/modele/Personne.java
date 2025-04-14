@@ -48,6 +48,11 @@ public abstract class Personne {
         return mdp;
     }
 
+    @Override
+    public String toString() {
+        return "Personne{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", mail=" + mail + ", mdp=" + mdp + '}';
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

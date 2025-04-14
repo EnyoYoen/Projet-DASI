@@ -28,9 +28,7 @@ public class PersonneDao {
     }
 
     public List<Personne> findByMailMdp(String mail, String mdp) {
-        //
-
-        String jpql = "SELECT e FROM Eleve e WHERE e.mail = :mail and e.mdp = :mdp";
+        String jpql = "SELECT p FROM Personne p WHERE p.mail = :mail and p.mdp = :mdp";
         TypedQuery<Personne> query = JpaUtil.obtenirContextePersistance().createQuery(jpql, Personne.class);
         query.setParameter("mail", mail);
         query.setParameter("mdp", mdp);
