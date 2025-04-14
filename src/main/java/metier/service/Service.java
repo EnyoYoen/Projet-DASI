@@ -361,11 +361,6 @@ public class Service {
         return listeEtablissements;
     }
 
-    public String accepterSoutien(Soutien soutien) {
-
-        return soutien.getLien();
-    }
-
     public List<Matiere> recupererMatiere() {
         List<Matiere> liste = Arrays.asList(Matiere.values());
         return liste;
