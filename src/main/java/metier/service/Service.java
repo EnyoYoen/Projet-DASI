@@ -57,7 +57,7 @@ public class Service {
             if (etablissementInDb) {
                 eleveDao.create(eleve);
                 JpaUtil.validerTransaction();
-                unMessage.envoyerMail("nepasrepondre.auto@service.fr", eleve.getMail(), "Succès Création Client", "Bienvenue, le client a été créé avec succès.");
+                unMessage.envoyerMail("nepasrepondre.auto@service.fr", eleve.getMail(), "Succès Création Compte Elève", "Bienvenue" + eleve.getPrenom() + "ton compte a été créé avec succès.");
                 result = true;
             } else {
                 Etablissement etablissement = obtenirEtablissement(codeEtablissement);
@@ -285,10 +285,13 @@ public class Service {
 
     public void noterSoutien(Soutien soutien, double note) {
         SoutienDao soutienDao = new SoutienDao();
+        IntervenantDao intervenantDao = new IntervenantDao();
 
         try {
             JpaUtil.creerContextePersistance();
             JpaUtil.ouvrirTransaction();
+
+            soutien.getIntervenant().setEnSoutien(false);
 
             soutien.setNote(note);
             if (soutien.getDateFin() == null) {
@@ -296,6 +299,7 @@ public class Service {
             }
 
             soutienDao.update(soutien);
+            intervenantDao.update(soutien.getIntervenant());
 
             JpaUtil.validerTransaction();
 
@@ -310,10 +314,13 @@ public class Service {
 
     public void ajouterCompteRendu(Soutien soutien, String compteRendu) {
         SoutienDao soutienDao = new SoutienDao();
+        IntervenantDao intervenantDao = new IntervenantDao();
 
         try {
             JpaUtil.creerContextePersistance();
             JpaUtil.ouvrirTransaction();
+
+            soutien.getIntervenant().setEnSoutien(false);
 
             soutien.setCompteRendu(compteRendu);
             if (soutien.getDateFin() == null) {
@@ -321,6 +328,7 @@ public class Service {
             }
 
             soutienDao.update(soutien);
+            intervenantDao.update(soutien.getIntervenant());
 
             JpaUtil.validerTransaction();
 

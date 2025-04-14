@@ -23,12 +23,13 @@ public class Main {
 
         //service.init();
         //testerInscrireEleve();
-        Personne personne = service.authentification("pierrelafon1@gmail.com", "mdp");
+        Personne personne = service.authentification("lafontim2@gmail.com", "1234");
         System.out.println(personne);
         if (personne instanceof Eleve) {
             testerCreerSoutien((Eleve) personne);
             System.out.println("Test créer soutien");
-        } else if (personne instanceof Autre) {
+        } else if (personne instanceof Intervenant) {
+
             System.out.println("Pas un elève");
         }
 
