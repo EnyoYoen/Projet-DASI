@@ -103,6 +103,5 @@ public class Soutien {
     private Eleve eleve;
     @ManyToOne
     private Intervenant intervenant;
-    @ManyToOne
     private Matiere matiere;
 }

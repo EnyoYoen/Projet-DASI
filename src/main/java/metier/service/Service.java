@@ -6,6 +6,7 @@
 package metier.service;
 
 import com.google.maps.model.LatLng;
+import dao.AutreDao;
 import dao.EleveDao;
 import dao.EtablissementDao;
 import dao.IntervenantDao;
@@ -13,10 +14,12 @@ import util.Message;
 import dao.JpaUtil;
 import dao.PersonneDao;
 import dao.SoutienDao;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import metier.modele.Autre;
 import metier.modele.Coordonnees;
 import metier.modele.Eleve;
 import metier.modele.Etablissement;
@@ -89,7 +92,6 @@ public class Service {
     public String creerSoutien(Eleve eleve, String details, Matiere matiere) {
 
         String result = null;
-
         SoutienDao soutienDao = new SoutienDao();
         IntervenantDao intervenantDao = new IntervenantDao();
 
@@ -98,21 +100,22 @@ public class Service {
 
             List<Intervenant> listeIntervenants = intervenantDao.findIntervenantsDisponibles(eleve.getClasse());
 
-            if (listeIntervenants != null) {
+            if (listeIntervenants != null && !listeIntervenants.isEmpty()) {
 
                 Intervenant intervenant = listeIntervenants.get(0);
                 Soutien soutien = new Soutien(matiere, eleve, details, intervenant);
                 intervenant.setEnSoutien(true);
 
-                JpaUtil.creerContextePersistance();
                 JpaUtil.ouvrirTransaction();
 
                 soutienDao.create(soutien);
+                intervenantDao.update(intervenant);
 
                 result = soutien.getLien();
 
                 JpaUtil.validerTransaction();
-
+            } else {
+                throw new Exception("Aucun intervenant disponible pour la classe " + eleve.getClasse());
             }
 
         } catch (Exception ex) {
@@ -136,8 +139,10 @@ public class Service {
 
             listePersonne = personneDao.findByMailMdp(mail, mdp);
 
-            if (listePersonne != null) {
+            if (listePersonne != null && !listePersonne.isEmpty()) {
                 personne = listePersonne.get(0);
+            } else {
+                throw new Exception("Mauvais identifiant ou mot de passe");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -327,6 +332,7 @@ public class Service {
         List<Soutien> listeSoutiens = null;
 
         try {
+            JpaUtil.creerContextePersistance();
             listeSoutiens = personneDao.recupererHistorique(personne);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -356,7 +362,13 @@ public class Service {
     }
 
     public String accepterSoutien(Soutien soutien) {
+
         return soutien.getLien();
+    }
+
+    public List<Matiere> recupererMatiere() {
+        List<Matiere> liste = Arrays.asList(Matiere.values());
+        return liste;
     }
 
     private Etablissement obtenirEtablissement(String codeEtablissement) {
@@ -383,6 +395,34 @@ public class Service {
         }
 
         return etablissement;
+    }
+
+    public void init() {
+        AutreDao autreDao = new AutreDao();
+
+        try {
+            JpaUtil.creerContextePersistance();
+            JpaUtil.ouvrirTransaction();
+
+            Autre autre1 = new Autre("Joueur", "0755624099", 6, 0, "Lafon", "Pierre", "pierrelafon1@gmail.com", "mdp");
+            Autre autre2 = new Autre("Joueur", "0755624099", 5, 1, "Lafon", "Pierre", "pierrelafon2@gmail.com", "mdp");
+            Autre autre3 = new Autre("Joueur", "0755624099", 4, 2, "Lafon", "Pierre", "pierrelafon3@gmail.com", "mdp");
+            Autre autre4 = new Autre("Joueur", "0755624099", 3, 3, "Lafon", "Pierre", "pierrelafon4@gmail.com", "mdp");
+
+            autreDao.create(autre1);
+            autreDao.create(autre2);
+            autreDao.create(autre3);
+            autreDao.create(autre4);
+
+            JpaUtil.validerTransaction();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JpaUtil.annulerTransaction();
+        } finally {
+            JpaUtil.fermerContextePersistance();
+        }
+
     }
 
 }

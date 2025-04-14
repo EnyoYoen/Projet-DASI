@@ -21,11 +21,21 @@ public class IntervenantDao {
         em.persist(intervenant);
     }
 
+    public void update(Intervenant intervenant) {
+        EntityManager em = JpaUtil.obtenirContextePersistance();
+        em.merge(intervenant);
+    }
+
     public List<Intervenant> findIntervenantsDisponibles(Integer classe) {
-        String jpql = "SELECT i FROM Intervenant i WHERE enSoutien = false AND niveauMin <= :classe AND niveauMax >= :classe AND nbSoutiens = MIN(SELECT nbSoutiens FROM Intervenant)";
+        String jpqlMin = "SELECT MIN(i.nbSoutiens) FROM Intervenant i WHERE i.enSoutien = false AND i.niveauMin >= :classe AND i.niveauMax <= :classe";
+        TypedQuery<Integer> queryMin = JpaUtil.obtenirContextePersistance().createQuery(jpqlMin, Integer.class);
+        queryMin.setParameter("classe", classe);
+        Integer minNbSoutiens = queryMin.getSingleResult();
+
+        String jpql = "SELECT i FROM Intervenant i WHERE i.enSoutien = false AND i.niveauMin >= :classe AND i.niveauMax <= :classe AND i.nbSoutiens = :minNbSoutiens";
         TypedQuery<Intervenant> query = JpaUtil.obtenirContextePersistance().createQuery(jpql, Intervenant.class);
         query.setParameter("classe", classe);
-        List<Intervenant> listeIntervenants = query.getResultList();
-        return listeIntervenants;
+        query.setParameter("minNbSoutiens", minNbSoutiens);
+        return query.getResultList();
     }
 }

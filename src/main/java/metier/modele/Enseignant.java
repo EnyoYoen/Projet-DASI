@@ -18,7 +18,7 @@ public class Enseignant extends Intervenant {
     }
 
     public Enseignant(String typeEtablissement, String numTel, Integer niveauMin, Integer niveauMax, Integer nbSoutiens, Boolean enSoutien, String nom, String prenom, String mail, String mdp) {
-        super(numTel, niveauMin, niveauMax, nbSoutiens, enSoutien, nom, prenom, mail, mdp);
+        super(numTel, niveauMin, niveauMax, nom, prenom, mail, mdp);
         this.typeEtablissement = typeEtablissement;
     }
 
